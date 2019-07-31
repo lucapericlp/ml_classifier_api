@@ -1,6 +1,11 @@
 from errors import *
 import aiohttp, asyncio, base64
 
+async def get_bytes(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            return await response.read()
+
 async def validate_and_extract(data,valid_classifiers):
 	if "classifier" in data and data["classifier"] is not None and data["classifier"] in valid_classifiers:
 		chosen_classifier = data["classifier"]
@@ -40,8 +45,3 @@ async def validate_and_extract(data,valid_classifiers):
 		})
 
 	return chosen_classifier, img_bytes
-
-async def get_bytes(url):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            return await response.read()

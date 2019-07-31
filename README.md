@@ -1,21 +1,39 @@
-#Onfido Technical Task
+##Onfido Technical Task
 
-
-Using Httpie, sending a request with a URL and classifier choice to endpoint 
-```bash
-http --json POST localhost:8080/api/v1/classify/numbers url=http://datawrangling.s3.amazonaws.com/sample_digit.png classifier=RNN
+###API Specification
+```yaml
+info:
+  title: ML classifier API
+  version: '0.1'
+openapi: 3.0.0
+paths:
+  /api/v1/classify/digits:
+    post:
+      responses:
+        200:
+          description: Return list of class predictions for input image.
+          example: "{'predictions': [['4', 0.9999681711196899], ['6', 2.6835603421204723e-05],\
+            \ ['1', 2.648422423590091e-06], ['7', 1.2625563385881833e-06], ['2', 4.2422348656145914e-07],\
+            \ ['9', 2.9029823167547875e-07], ['0', 1.704291605619801e-07], ['8', 1.5085298343819886e-07],\
+            \ ['3', 3.132079839929247e-08], ['5', 4.936829611779103e-09]]}  \n"
+          parameters:
+          - classifier: RNN
+          - url: http://datawrangling.s3.amazonaws.com/sample_digit.png
+        400:
+          description: Invalid data provided.
+          example: Error retrieving and opening image via URL. Please try with another
+            image.
 ```
 
-Sending a base64 image using Python3:
-See local_image_request.py
+###Example usage:
+Using Httpie, sending a request with a URL and classifier choice to endpoint:
+```bash
+http --json POST localhost:8080/api/v1/classify/digits url=http://datawrangling.s3.amazonaws.com/sample_digit.png classifier=RNN
+```
 
+Using Python3, sending a request with an encoded image and classifier choice to endpoint:
+[local_image_request.py](/examples/local_image_request.py)
 
-API Docs
-if __name__ == '__main__':
-    assert sys.argv[-1] in ("run", "schema"), "Usage: example.py [run|schema]"
-
-    if sys.argv[-1] == "run":
-        uvicorn.run(app, host='0.0.0.0', port=8000)
-    elif sys.argv[-1] == "schema":
-        schema = schemas.get_schema(routes=app.routes)
-        print(yaml.dump(schema, default_flow_style=False))
+###Generate API Spec
+Send a GET request to /schema endpoint. An example:
+[get_api_spec.py](/scripts/get_api_spec.py)
