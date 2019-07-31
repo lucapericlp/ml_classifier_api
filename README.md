@@ -1,6 +1,6 @@
-##Onfido Technical Task
+## Onfido Technical Task
 
-###API Specification
+### API Specification
 ```yaml
 info:
   title: ML classifier API
@@ -33,18 +33,18 @@ paths:
             \ or no classifier-type provided.\"\n  }\n}\n"
 ```
 
-###Example usage:
-* Using Httpie, sending a request with a URL and classifier choice to endpoint:
+### Example usage:
+Using Httpie, sending a request with a URL and classifier choice to endpoint:
 
 ```bash
 http --json POST localhost:8080/api/v1/classify/digits url=http://datawrangling.s3.amazonaws.com/sample_digit.png classifier=RNN
 ```
 
-* Using Python3, sending a request with an encoded image and classifier choice to endpoint:
+Using Python3, sending a request with an encoded image and classifier choice to endpoint: 
 
 [local\_image\_request.py](/examples/local_image_request.py)
 
-###Generate API Spec
+### Generate API Spec
 Send a GET request to /schema endpoint. An example:
 
 [get\_api\_spec.py](/scripts/get_api_spec.py)
