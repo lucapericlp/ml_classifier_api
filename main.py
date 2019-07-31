@@ -12,8 +12,10 @@ from utilities import *
 global VALID_CLASSIFIERS
 VALID_CLASSIFIERS = {
     "RNN":factory.create_rnn(),
-    "CNN":None,
-    "SVM":None
+    "CNN":factory.create_cnn(),
+    "SVM":factory.create_svm(),
+    "RF" :factory.create_rf(),
+    "KNN":factory.create_knn()
 }
 
 schemas = SchemaGenerator({"openapi": "3.0.0", "info": {"title": "ML classifier API", "version": "0.1"}})
@@ -26,7 +28,7 @@ async def classify_numbers(request):
       200:
         description: Returns JSON ordered list of class predictions for input image.
         parameters:
-          ["classifier": "RNN|CNN|SVM", "url", "b64"]
+          ["classifier": "RNN|CNN|SVM|RF|KNN", "url", "b64"]
         example_requests:
           [[{"classifier": "RNN"}, {"url": "http://datawrangling.s3.amazonaws.com/sample_digit.png"}], or,
           [{"classifier": "RNN"}, {"b64": "AAAN4AAADfCAYAAACZO20SAAAABmJLR0QA/wD/AP+..."}]]

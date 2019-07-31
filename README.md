@@ -24,7 +24,7 @@ paths:
             0\", 1.704291605619801e-07], [\"8\", 1.5085298343819886e-07], [\"3\",\
             \ 3.132079839929247e-08], [\"5\", 4.936829611779103e-09]]}  \n"
           parameters:
-          - classifier: RNN|CNN|SVM
+          - classifier: RNN|CNN|SVM|RF|KNN
           - url
           - b64
         400:
