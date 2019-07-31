@@ -49,7 +49,7 @@ class ScikitLearner(GeneralLearner):
 			})
 
 	def output(self, losses):
-		classes = [i for i in range(0,10)]
+		classes = [str(i) for i in range(0,10)]
 		return {"predictions": sorted(
 				zip(classes, map(float, losses)),
 				key=lambda p: p[1],

@@ -34,13 +34,18 @@ paths:
 ```
 
 ### Example usage:
-Using Httpie, sending a request with a URL and classifier choice to endpoint:
+First run server using Docker (and ensure port 8080 is open):
+```bash
+docker build -t api .
+docker run -p 8080:8080 api
+```
 
+Using Httpie, sending a request with a URL and classifier choice to the local endpoint:
 ```bash
 http --json POST localhost:8080/api/v1/classify/digits url=http://datawrangling.s3.amazonaws.com/sample_digit.png classifier=RNN
 ```
 
-Using Python3, sending a request with an encoded image and classifier choice to endpoint: 
+Using Python3, sending a request with an encoded image and classifier choice to the local endpoint: 
 
 [local\_image\_request.py](/examples/local_image_request.py)
 
