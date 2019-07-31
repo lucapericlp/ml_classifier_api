@@ -8,8 +8,16 @@ from fastai.vision import *
 import factory
 from utilities import *
 
+# Define the valid classifiers and create the relative models.
+global VALID_CLASSIFIERS
+VALID_CLASSIFIERS = {
+    "RNN":factory.create_rnn(),
+    "CNN":None,
+    "SVM":None
+}
+
 schemas = SchemaGenerator({"openapi": "3.0.0", "info": {"title": "ML classifier API", "version": "0.1"}})
-app = Starlette(debug=True)
+app = Starlette()
 
 @app.route("/api/v1/classify/digits", methods=["POST"])
 async def classify_numbers(request):
@@ -26,29 +34,21 @@ async def classify_numbers(request):
         example:
           Error retrieving and opening image via URL. Please try with another image.
     """
-    
-    # Validate and extract fields of interest from the POST request
-    data = await request.json()
-    chosen_classifier, img_bytes = None, None
     try:
+        # get the correct classifier and input data then use them to perform inference and 
+        # return accordingly.
+        data = await parse_request(request)
         chosen_classifier, img_bytes = await validate_and_extract(data,VALID_CLASSIFIERS.keys())
 
         learner,response = VALID_CLASSIFIERS[chosen_classifier],None
         response = learner.predict(img_bytes)
         return JSONResponse(response, 200)
     except ValidationException as e:
-        return JSONResponse(str(e), e.status_code)
+        return JSONResponse(e.json(), e.status_code)
 
 @app.route("/schema", methods=["GET"], include_in_schema=False)
 def openapi_schema(request):
     return schemas.OpenAPIResponse(request=request)
 
 if __name__ == '__main__':
-    global VALID_CLASSIFIERS
-    VALID_CLASSIFIERS = {
-        "RNN":factory.create_rnn(),
-        "CNN":None,
-        "SVM":None
-    }
-
     uvicorn.run(app, host='0.0.0.0', port=8080)

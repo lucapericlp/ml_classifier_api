@@ -1,10 +1,29 @@
 from errors import *
 import aiohttp, asyncio, base64
 
+'''
+Raising of errors should be delegated to any dedicated functions like parse_request()
+(since they can be used in multiple places). Be frugal with function wrapping for the purpose
+of error raising (depends on where the function is most likely to be used and how frequently). 
+Also prioritise logical symmetry like how try block could be delegated to get_bytes()
+but was not to maintain logical symmetry within the validate_and_extract 'if' block and 
+it is unlikely for it to be used outside of the parent function.
+'''
+
 async def get_bytes(url):
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             return await response.read()
+
+async def parse_request(request):
+	try:
+		return await request.json()
+	except:
+		err = 6
+		raise ValidationException({
+				"error":{"code":err, "message":ERROR_CODES[err]},
+				"status_code":400
+			})
 
 async def validate_and_extract(data,valid_classifiers):
 	if "classifier" in data and data["classifier"] is not None and data["classifier"] in valid_classifiers:

@@ -1,6 +1,8 @@
 from setup import *
 
 def create_rnn():
+	# Defining the properties that the model was trained with in order to correctly perform
+	# inference. Load weights into learner and create fast.ai implementation of learner.
 	tfms = get_transforms(do_flip=False, max_lighting=None, 
 		max_zoom=1.2, p_affine=0.5, max_warp=0.2, max_rotate=5.0)
 	classes = [str(i) for i in range(0,10)]
