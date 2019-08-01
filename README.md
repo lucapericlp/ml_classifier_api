@@ -40,6 +40,11 @@ docker build -t api .
 docker run -p 8080:8080 api
 ```
 
+or just using Python3 (ensure you have all modules in requirements.txt installed)
+```bash
+python3 main.py
+```
+
 Using Httpie, sending a request with a URL and classifier choice to the local endpoint:
 ```bash
 http --json POST localhost:8080/api/v1/classify/digits url=http://datawrangling.s3.amazonaws.com/sample_digit.png classifier=RNN
