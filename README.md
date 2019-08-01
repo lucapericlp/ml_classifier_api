@@ -49,6 +49,9 @@ Using Python3, sending a request with an encoded image and classifier choice to 
 
 [local\_image\_request.py](/examples/local_image_request.py)
 
+### Using the notebooks
+Use jupyter to open and view the notebooks.
+
 ### Generate API Spec
 Send a GET request to /schema endpoint. An example:
 
