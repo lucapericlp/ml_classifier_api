@@ -47,10 +47,10 @@ http --json POST localhost:8080/api/v1/classify/digits url=http://datawrangling.
 
 Using Python3, sending a request with an encoded image and classifier choice to the local endpoint: 
 
-[local\_image\_request.py](/examples/local_image_request.py)
+[local\_image\_request.py](/examples/fastai_local_image_request.py)
 
 ### Using the notebooks
-Use jupyter to open and view the notebooks.
+Use jupyter to open and view the notebooks. Since they were used in Google Colab, the instance already had dependencies loaded (setup here: https://course.fast.ai/start_colab.html) and files were saved to Google Drive hence the Drive mount.
 
 ### Generate API Spec
 Send a GET request to /schema endpoint. An example:
