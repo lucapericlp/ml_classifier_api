@@ -5,4 +5,4 @@ python-multipart==0.0.5
 scikit-learn==0.20.2
 numpy==1.16.0
 uvicorn==0.8.4
-aiohttp==3.5.4
+aiohttp==3.7.4
